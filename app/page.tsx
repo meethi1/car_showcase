@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Hero ,CustomFilter,SearchBar,CarCard} from '@/components'
+import { Hero ,CustomFilter,SearchBar,CarCard, CustomButton} from '@/components'
 import { fetchCars } from '@/utils'
 export default  async function Home() {
   const allCars=await fetchCars();
@@ -41,6 +41,10 @@ export default  async function Home() {
               )
             }
           </div>
+          <CustomButton
+          title='Place Order'
+            containerStyles="bg-orange-500 float-right  align-right mr-10 rounded-full mt-10"
+            />
     </main>
   )
 }

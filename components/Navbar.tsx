@@ -1,13 +1,17 @@
+"use client";
 import Link from "next/link"
 import Image from "next/image"
 
 import CustomButton from "./CustomButton"
 import {motion,AnimatePresence} from 'framer-motion'
-import {
-  
-    slideAnimation
-  } from '../config/motion';
+import { slideAnimation } from '../config/motion';
+import { useRef, useState } from "react";
+import Loggin from "./Loggin";
+import { truncate } from "fs";
 const Navbar = () => {
+  const [isClicked,setIsClicked]=useState(false);
+   const [isLoggin,setIsLoggin]=useState(false);
+  
   return (
     <header className="w-full absolute z-10">
         <nav className="max-w-[1440px] mx-auto flex justify-between items-center 
@@ -23,12 +27,22 @@ const Navbar = () => {
            
             />
         </Link>
-        <CustomButton
+        { !isLoggin&&  <CustomButton
         title="Sign In"
         btnType="button"
         containerStyles="text-primary-blue rounded-full bg-white min-w-[130px]"
-        />
-        </nav>
+        handleClick={() => setIsClicked(true)}
+        />}
+     { isLoggin&& <div className="text-primary-black font-bold bg-white min-w-[130px]">
+      Hello! Yukta...
+      </div>}
+
+        {isClicked&&!isLoggin&&<Loggin
+        isClicked
+        closeModal={()=>setIsClicked(false)}
+         changeLoggin={()=>setIsLoggin(true)}    />}
+
+       </nav>
     </header>
   )
 }

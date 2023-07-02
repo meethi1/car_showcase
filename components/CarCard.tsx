@@ -4,12 +4,15 @@ import Image from 'next/image'
 import { CarProps } from '@/types';
 import CustomButton from './CustomButton';
 import { calculateCarRent } from '@/utils';
+import CarDetails from './CarDetails';
+import ReactStars from 'react-rating-star-with-type'
 interface CarCardProps{
     car:CarProps
 }
 const CarCard = ({car}:CarCardProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const {city_mpg,year,make,model,transmission,drive}=car;
+    const [star, setStar] = useState(5);
     const carRent=calculateCarRent(city_mpg,year)
   return (
     <div className="car-card group">
@@ -19,16 +22,27 @@ const CarCard = ({car}:CarCardProps) => {
       </h2>
     </div>
 
-    <p className='flex mt-6 text-[32px] leading-[38px] font-extrabold'>
-      <span className='self-start text-[14px] leading-[17px] font-semibold'>$</span>
-      {carRent}
-      <span className='self-end text-[14px] leading-[17px] font-medium'>/day</span>
-    </p>
-    <div className='relative w-full h-40 my-3 object-contain '>
+   
+    <div className='relative w-full h-40 mx-0 object-contain '>
         <Image src="/hero.png"  alt="car model" fill priority
         className='object-contain'/>
     </div>
-    <div className="relative flex w-full mt-2">
+    <div className='border-t-4 w-full bg-gray-50' >
+    <div className=' mt-6 text-[20px] leading-[38px] font-extrabold  '>
+    Price Per Day:
+      <span className='self-start text-[14px] leading-[17px] font-semibold'>$</span>
+     {carRent}
+    
+   
+   <div className='float-right   '>
+  < ReactStars 
+   
+    value={4.2}  
+    
+    activeColors={[ "red", "orange", ]} 
+    />
+   </div> </div>
+    <div className="relative flex w-full mt-2 b">
      <div className="flex group-hover:invisible
      w-full justify-between text-gray">
         <div className="flex flex-col justify-center items-center gap-2">
@@ -62,9 +76,14 @@ const CarCard = ({car}:CarCardProps) => {
          textStyles='text-white text-[14px] leading-[17px] font-bold'
          rightIcon='/right-arrow.svg'
          handleClick={() => setIsOpen(true)}/>
-     </div>
+     </div> </div>
     </div>
+   <CarDetails
+   isOpen={isOpen}
+   closeModal={()=>setIsOpen(false)}
+   car={car}
 
+   />
     </div>
   )
 }
